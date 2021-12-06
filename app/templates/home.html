@@ -7,10 +7,11 @@
     <title>Interfaz Pic</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    
 </head>
 
-<body style="background-color: rgb(205, 129, 212);">
+
+<body style="background-color: rgb(194, 84, 204);">
     <div class="container" style="padding-top: 50px;">
         <div class="row" >
           <div class="col-md-5">
@@ -18,33 +19,55 @@
                 <div class="card-header">
                     <img src={{ url_for('static', filename='img/udec.png') }} alt="Chart" height="120" width="370">
                     <h3><p>Formulario Pic para Convertidor Buck Dc-Dc</p></h3>
+                    {% if s: %}
+                    <p>Dispositivo conectado <img src={{ url_for('static', filename='img/circ.png') }} alt="Chart" height="10" width="10"></p>
+                   {% endif %}
+
                 </div>
                 <div class="card-bg.body">
                     <form action="/" method="post">
+                        <p>Voltaje Entrada: 48 [V] </p> 
                         <label for="name">Ciclo de Trabajo [0-100]: </label>
-                        <input type="text" id="ciclo" name="ciclo" value="{{ ciclo }}"/><br>
-                        <label for="frecuencia">Frecuencia [Hz]: </label>     
+                        <input type="range" name="ciclo" min="0" max="100" step="1" value="{{ ciclo }}" list="steplist">
+                          <datalist id="steplist">
+                            <option>0</option>
+                            <option>25</option>
+                            <option>50</option>
+                            <option>75</option>
+                            <option>100</option>
+                          </datalist>
+                        <input type="text" id="ciclo" name="ciclo" value="{{ ciclo }}" /><br>
+                        <label for="name">Frecuencia [10-30 kHz]: </label>     
+                        <input type="range" name="frecuencia" min="10000" max="30000" step="100" value="{{ frecuencia}}" list="tickmark">
+                          <datalist id="tickmark">
+                            <option>10000</option>
+                            <option>15000</option>
+                            <option>20000</option>
+                            <option>25000</option>
+                            <option>30000</option>
+                          </datalist>
                         <input type="text" id="frecuencia" name="frecuencia" value="{{ frecuencia }}" /><br>
-                        <label for="name">Voltaje de Entrada [V]: </label>
+                        <p><b>Voltaje de Salida: {{ vs }} [V]</b></p>
+                        <label for="name">Ingrese Voltaje de Salida deseado [0-42 V]: </label>
                         <input type="text" id="voltaje" name="voltaje" value="{{ voltaje }}"/><br>
                         <input type="submit" class="btn btn-primary" id="send-signup" name="signup" value="Submit" />
                     </form>
                 </div>
                 <div class="card-footer">
                   {% if vs: %}
-                   <p>Voltaje de Salida: {{ vs }} [V]</p> 
+                   <p>Debe modificar:</p>
+                   <p>Ciclo de Trabajo: {{ cicl }} %</p> 
                   {% endif %}
                 </div>
               </div>
           </div>
           <div class="col-md-7">
             <div class="card">
-              <div class="card-header"> <h3> Onda de entrada al PIC18F4550 <h3> </div>
+              <div class="card-header"> <h3> Onda de entrada al PIC18F4550 <h3></div>
               <div class="card-body">
                 {% if url: %}
                     <img src={{ url_for('static', filename='img/square.png') }} alt="Chart" height="520" width="720">
                 {% endif %}
-
               </div>
               <div class="card-footer"> </div>
             </div>
